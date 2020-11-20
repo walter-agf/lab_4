@@ -72,3 +72,120 @@ map<string, map<string, int> > dic(string name)
 
     return inicial;
 }
+
+void mostrar(map<string, map<string, int> > inicial)
+{
+    for (auto var : inicial){
+        cout << var.first << "\t_______  ";
+        for (auto var1 = var.second.begin(); var1 != var.second.end(); var1 ++){
+            cout << var1 ->first << " -> " << var1->second << " ; ";
+        }
+        cout << endl;
+    }
+}
+
+bool encontrar(string nodo, map<string, map<string, int> > inicial)
+{
+    bool esta = false;
+    for (auto var : inicial){
+        if (var.first == nodo){
+            esta = true;
+            break;
+        }
+    }
+    return esta;
+}
+
+map<string, map<string, int> > eliminar(string nodo, map<string, map<string, int> > inicial)
+{
+    int conti = 0;
+    bool ava = true;
+    string eli= "";
+    while (ava == true){
+        cout << "\n\n\tQue desea realizar ?\n\n";
+        cout << "\t1) Eliminar todo un nodo\n";
+        cout << "\t2) Eliminar solo la coneccion de dos nodos\n";
+        cout << "\n ---> "; cin >> conti;
+
+        switch (conti) {
+
+        case 1:{
+            inicial.erase(nodo);
+            for (auto var : inicial){
+                inicial[var.first].erase(nodo);
+            }
+            ava = false;
+            break;
+        }
+
+        case 2:{
+            cout << "\n\n\tIngrese el nombre a eliminar dentro de [ " << nodo << " ]\n\n";
+            cout << "\n ---> "; cin >> eli;
+
+            bool esta = false;
+            for (auto var : inicial[nodo]){
+                if (var.first == eli){
+                    esta = true;
+                    break;
+                }
+            }
+
+            if (esta == true){
+                inicial[nodo].erase(eli);
+                inicial[eli].erase(nodo);
+            }
+            ava = false;
+            break;
+        }
+
+        default:{
+            cout << "VALOR FUERA DE RANGO - REINGRESE";
+            break;
+        }
+        }
+    }
+
+    //BARRIDO
+
+    for (auto var : inicial){
+        eli = "";
+        for (auto var2 : inicial[var.first]){
+            eli += var2.first;
+        }
+        cout << "\n\n" << eli << "\n\n";
+        if (var.first == eli) inicial.erase(eli);
+    }
+
+    return inicial;
+}
+
+map<string, map<string, int> > crear(string nodo, map<string, map<string, int> > inicial)
+{
+    string name = "0";
+    int valor = 0;
+    cout << "\n\nIngrese los nombres de las conecciones del nuevo nodo, junto con su valor";
+    cout << "\n(Cuando ingrese -1, como valor, dejara de resibir datos)";
+
+    while (valor != -1){
+        cout << "\n\n Nombre -->  "; cin >> name; cout << " Valor --> "; cin >> valor;
+        bool esta = false;
+        for (auto var : inicial){
+            if (var.first == name){
+                esta = true;
+                break;
+            }
+        }
+        if (esta == true){
+            if (valor != -1){
+                inicial[nodo].insert(pair <string,int> (name,valor));
+            }
+        }
+    }
+    return inicial;
+}
+
+
+map<string, map<string, int> > crear_azar(string nodo, map<string, map<string, int> > inicial)
+{
+
+}
