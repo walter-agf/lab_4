@@ -152,7 +152,7 @@ map<string, map<string, int> > eliminar(string nodo, map<string, map<string, int
         for (auto var2 : inicial[var.first]){
             eli += var2.first;
         }
-        cout << "\n\n" << eli << "\n\n";
+        //cout << "\n\n" << eli << "\n\n";
         if (var.first == eli) inicial.erase(eli);
     }
 
@@ -184,12 +184,6 @@ map<string, map<string, int> > crear(string nodo, map<string, map<string, int> >
     return inicial;
 }
 
-
-map<string, map<string, int> > crear_azar(string nodo, map<string, map<string, int> > inicial)
-{
-
-}
-
 string azar(int *B)
 {
     string nodo = "";
@@ -215,4 +209,99 @@ string azar(int *B)
     if (C != 0 )nodo.push_back(char((*B%10) + 48));
     //cout << endl << nodo << endl;
     return nodo;
+}
+
+map<string, map<string, int> > crear_azar(map<string, int> ram, map<string, map<string, int> > inicial)
+{
+    string nodo = "";
+    for (auto var : ram){
+        if (var.second == 0) nodo = var.first;
+    }
+    for (auto var : ram){
+        inicial[nodo].insert(pair <string,int> (var.first,var.second));
+
+        for (auto dos : inicial){
+            //cout << dos.first << "\t" << var.first;
+            if (dos.first == var.first){
+                //cout << "\tHola";
+                inicial[dos.first].insert(pair <string,int> (nodo,var.second));
+            }
+            //cout << endl;
+        }
+
+
+    }
+    return inicial;
+}
+
+map<string, map<string, int> > modificar(string nodo, map<string, map<string, int> > inicial)
+{
+    int conti = 0;
+    bool ava = true;
+    string cambio;
+    while (ava == true){
+        cout << "\n\n\tQue desea realizar ?\n\n";
+        cout << "\t1) Editar Nombre del nodo\n";
+        cout << "\t2) Editar la conceccion con otro nodo\n";
+        cout << "\n ---> "; cin >> conti;
+
+        switch (conti) {
+
+        case 1:{
+            bool esta = false;
+            while (esta == false){
+                cout << "\n\n\tIngrese el nuevo nombre para este nodo\n\n --> ";cin >> cambio;
+                for (auto var : inicial){
+                    if (var.first == cambio) esta = true;
+                }
+                if (esta == true){
+                    esta = false;
+                    cout << "\n\n\t YA HAY UN NODO CON ESE NOMBRE -- REINGRESE\n";
+                }
+                else{
+                    for (auto var: inicial[nodo]){
+                        inicial[cambio].insert(pair <string,int> (var.first,var.second));
+                    }
+                    inicial.erase(nodo);
+                    for (auto var: inicial){
+                        inicial[var.first].insert(pair <string,int> (cambio,var.second[nodo]));
+                        inicial[var.first].erase(nodo);
+                    }
+                    esta = true;
+                }
+            }
+            ava = false;
+            break;
+        }
+
+        case 2:{
+
+            bool esta = false;
+            while (esta == false){
+                cout << "\n\n\tIngrese el nombre del nodo a modificar coneccion\n\n --> ";cin >> cambio;
+                for (auto var : inicial[nodo]){
+                    if (var.first == cambio) esta = true;
+                }
+                if (esta == true){
+                    cout << "\n\n\tIngrese la nueva cantida de coneccion\n\n --> ";cin >> conti;
+                    inicial[nodo][cambio] = conti;
+                    esta = true;
+                }
+                else{
+                    esta = false;
+                    cout << "\n\n\t NO HAY UN NODO CON ESE NOMBRE -- REINGRESE\n";
+                }
+            }
+
+            ava = false;
+            break;
+        }
+
+        default:{
+            cout << "VALOR FUERA DE RANGO - REINGRESE";
+            break;
+        }
+        }
+    }
+    return inicial;
 }

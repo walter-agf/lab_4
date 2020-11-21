@@ -106,7 +106,7 @@ int main()
                     esta = encontrar (nodo,inicial);
                 }
                 ram[nodo] = 0;
-                for (int i = 0; i < 960 ;i++){
+                for (int i = 0; i < 24 ;i++){
                     nodo = azar(&B);
                     if (ram.find(nodo) == ram.end()){
                         srand(B);
@@ -116,16 +116,39 @@ int main()
                     }
                 }
                 inicial = crear_azar (ram,inicial);
+                //____________________________________________
+                //mostrar(inicial);
+                esta = false;
+                for (auto var : inicial){
+                    nodo = "";
+                    for (auto var2 : inicial[var.first]){
+
+                        for (auto var3 : inicial){
+                            if (var2.first == var3.first)nodo += var2.first;
+                        }
+                    }
+                    //cout << "\n" << nodo << "\t" << var.first;
+
+                    if (var.first == nodo) esta = true;
+                }
+                if (esta == true) inicial.erase(nodo);
+
+                ram.clear();
+
+                //mostrar(inicial);
+                //____________________________________________
 
                 //final = base (inicial);
+
+                cout << "\n\n\tVALOR AGREGADO CORRECTAMENTE\n\n";
+                break;
             }
 
             default :{
                 cout << "\n\nVALOR FUERA DE RANGO \n\n\n";
+                break;
             }
-
             }
-
             break;
         }
 
@@ -134,10 +157,11 @@ int main()
             cout << "\n\n\tIngrese el nombre del nodo a modificar\n";
             cout << "\n ---> "; cin >> nodo;
             esta = encontrar (nodo,inicial);
-            cout << esta;
             if (esta == true){
-                //inicial = modificar (nodo,inicial)
+                inicial = modificar (nodo,inicial);
                 //final = base (inicial);
+                //mostrar(inicial);
+                cout << "\n\n\tMODIFICACION COMPLETA\n\n\n";
             }
             else {
                 cout << "\n\nCLAVE DADA NO ESTA DENTRO DE LA RED, NO SE PUEDE MODIFICAR\n\n\n";
@@ -152,7 +176,7 @@ int main()
             esta = encontrar (nodo,inicial);
             if (esta == true){
                 inicial = eliminar (nodo,inicial);
-                mostrar(inicial);
+                //mostrar(inicial);
                 //final = base (inicial);
                 cout << "\n\n\tELIMINACION CULMINADA CON EXITO\n\n";
             }

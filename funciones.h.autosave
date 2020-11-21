@@ -18,7 +18,7 @@ string lectura ();
 bool falla (string name);
 map <string,map<string,int>> dic(string name);
 
-map <string,map<string,int>> base(map <string,map<string,int>> inicial);
+
 
 bool encontrar (string nodo,map <string,map<string,int>> inicial);
 
@@ -33,3 +33,10 @@ map <string,map<string,int>> crear_azar (map<string,int> ram, map <string,map<st
 string azar (int *B);
 
 map <string,map<string,int>> modificar (string nodo, map <string,map<string,int>>inicial);
+
+
+
+//________________________________________________________________________________________
+
+
+map <string,map<string,int>> base(map <string,map<string,int>> inicial);
