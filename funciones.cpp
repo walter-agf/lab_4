@@ -189,3 +189,30 @@ map<string, map<string, int> > crear_azar(string nodo, map<string, map<string, i
 {
 
 }
+
+string azar(int *B)
+{
+    string nodo = "";
+    int A = 0, C = 0;
+
+    while (true){
+        srand(*B);
+        C = rand()%1000;
+        srand(time(NULL));//definimos un cambio de entorno para encontrar la variable
+        A = rand() * C;
+        A = A%100; // se encuentra el numero aleatorio
+        if (A < 65 || A > 90 ){
+            A += 100;
+        }
+        *B =(*B) * 7;
+        if (A >=65 && A <= 90 ) break;
+    }
+    srand(A);
+    *B =rand() * C;
+    C = *B%10;
+    //cout <<  "\n\n" << A << endl;
+    nodo.push_back(char(A));
+    if (C != 0 )nodo.push_back(char((*B%10) + 48));
+    //cout << endl << nodo << endl;
+    return nodo;
+}

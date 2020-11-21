@@ -7,6 +7,8 @@ int main()
     int conti = 0;
     map <string,map<string,int>> inicial;
     map <string,map<string,int>> final;
+    int B = 0;
+    map <string,int> ram;
     //Lectura del archivo
 
     while (ava){
@@ -95,21 +97,26 @@ int main()
             }
 
             case 2:{
-                //nodo = azar();
+                srand(time(NULL));
+                B = rand();
+                nodo = azar(&B);
                 esta = encontrar (nodo,inicial);
                 while (esta == true){
-                    //nodo = azar();
+                    nodo = azar(&B);
                     esta = encontrar (nodo,inicial);
                 }
-                //inicial = crear_azar (nodo,inicial);
-                for (auto var : inicial){
-                    nodo = "";
-                    for (auto var2 : inicial[var.first]){
-                        nodo += var2.first;
+                ram[nodo] = 0;
+                for (int i = 0; i < 960 ;i++){
+                    nodo = azar(&B);
+                    if (ram.find(nodo) == ram.end()){
+                        srand(B);
+                        conti = rand();
+                        conti %= 100;
+                        if (conti != 0)ram[nodo] = conti;
                     }
-                    cout << "\n\n" << nodo << "\n\n";
-                    if (var.first == nodo) inicial.erase(nodo);
                 }
+                inicial = crear_azar (ram,inicial);
+
                 //final = base (inicial);
             }
 

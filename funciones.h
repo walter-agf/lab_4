@@ -7,6 +7,9 @@
 #include <string>
 #include <fstream>
 #include <map>
+#include <time.h>
+#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -26,3 +29,5 @@ void mostrar(map <string,map<string,int>> inicial);
 
 map <string,map<string,int>> crear (string nodo, map <string,map<string,int>> inicial);
 map <string,map<string,int>> crear_azar (string nodo, map <string,map<string,int>> inicial);
+
+string azar (int *B);
