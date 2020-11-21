@@ -9,5 +9,4 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
-    base.h \
     funciones.h

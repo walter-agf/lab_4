@@ -1,5 +1,4 @@
 #include "funciones.h"
-#include "base.h"
 
 map<string, map<string,list<string>>> base(map<string, map<string, int> > inicial)
 {
@@ -32,9 +31,9 @@ map<string, map<string,list<string>>> base(map<string, map<string, int> > inicia
                 final[var.first][con].push_front(contenido);
             }
             else final[var.first][con].push_front("-1");
+            final[var.first][con].push_back("______");
         }
     }
-
 
 
 
