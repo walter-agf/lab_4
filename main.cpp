@@ -6,7 +6,7 @@ int main()
     bool ava = true, esta = false;
     int conti = 0;
     map <string,map<string,int>> inicial;
-    map <string,map<string,int>> final;
+    map <string,map<string,list<string>>> final;
     int B = 0;
     map <string,int> ram;
     //Lectura del archivo
@@ -23,7 +23,7 @@ int main()
 
     //Creacion de base
 
-    //final = base (inicial);
+    final = base (inicial);
 
     //________________________________________________________
 
@@ -45,6 +45,7 @@ int main()
         switch (conti) {
 
         case 1:{
+            string valor;
             cout << "\n\n\tQue desea realizar ?\n\n";
             cout << "\t1) Ver matriz especifica\n";
             cout << "\t2) Ver matriz completa\n";
@@ -54,19 +55,49 @@ int main()
             switch (conti) {
 
             case 1:{
+                for (auto var : final){
+                    cout << "\n\t" << var.first;
+                }
+                cout << "\n\n\tIngresa cual matriz ver\n ---> "; cin >> nodo;
+                esta = encontrar (nodo,inicial);
+                if (esta == true){
+                    cout << "\n\n\n_____________________________________________________\n\n\t";
+                    for (auto  var : final[nodo]){
+                        cout << var.first << "\t";
+                    }
+                    cout << endl << nodo;
+                    for (auto  var : final[nodo]){
+                        valor = var.second.front();
+                        cout << "\t" << valor;
+                    }
+                    cout << "\n\n_____________________________________________________\n\n\n";
+                }
+                else {
+                    cout << "\n\nCLAVE DADA NO SE PUEDE IMPRIMIR PORQUE NO EXISTE\n\n\n";
+                }
                 break;
             }
 
             case 2:{
+                cout << "\n\n_____________________________________________________\n\t";
+                for (auto nodo : final){
+                    for (auto  var : final[nodo.first]){
+                        cout << var.first << "\t";
+                    }
+                    cout << endl << nodo.first;
+                    for (auto  var : final[nodo.first]){
+                        valor = var.second.front();
+                        cout << "\t" << valor;
+                    }
+                    cout << "\n_____________________________________________________\n\t";
+                }
                 break;
             }
 
             default :{
                 cout << "\n\nVALOR FUERA DE RANGO \n\n\n";
             }
-
             }
-
             break;
         }
 
@@ -88,7 +119,7 @@ int main()
                 if (esta == false){
                     inicial = crear (nodo,inicial);
                     //mostrar(inicial);
-                    //final = base (inicial);
+                    final = base (inicial);
                 }
                 else {
                     cout << "\n\nCLAVE DADA ESTA DENTRO DE LA RED, NO SE PUEDE CREAR, DIRIJASE A MODIFICAR\n\n\n";
@@ -138,7 +169,7 @@ int main()
                 //mostrar(inicial);
                 //____________________________________________
 
-                //final = base (inicial);
+                final = base (inicial);
 
                 cout << "\n\n\tVALOR AGREGADO CORRECTAMENTE\n\n";
                 break;
@@ -159,8 +190,8 @@ int main()
             esta = encontrar (nodo,inicial);
             if (esta == true){
                 inicial = modificar (nodo,inicial);
-                //final = base (inicial);
                 //mostrar(inicial);
+                final = base (inicial);
                 cout << "\n\n\tMODIFICACION COMPLETA\n\n\n";
             }
             else {
@@ -177,7 +208,7 @@ int main()
             if (esta == true){
                 inicial = eliminar (nodo,inicial);
                 //mostrar(inicial);
-                //final = base (inicial);
+                final = base (inicial);
                 cout << "\n\n\tELIMINACION CULMINADA CON EXITO\n\n";
             }
             else {
@@ -187,10 +218,41 @@ int main()
         }
 
         case 5:{
+            string valor;
+            bool es = false;
+            cout << "\n\n\tIngrese los dos nodos para conocer distancia\n\nNODO UNO ---> ";cin >> nodo;
+            cout << "\nNODO DOS ---> "; cin >> valor;
+
+            esta = false;
+            for (auto var : final){
+                if (var.first == nodo) es = true;
+                if (var.first == valor) esta = true;
+            }
+            if (es == true && esta == true){
+                cout << "\n\n\tLa distancia del nodo [ " << nodo << " ] al nodo [ " << valor;
+                cout << " ] es de = " << final[nodo][valor].front() << "\n\n";
+            }
+            else cout << "\n\n\tERROR ----- UNO DE LOS NODOS NO ESTA REGITRADO EN LA RED\n\n\n\n";
+
             break;
         }
 
         case 6:{
+            string valor;
+            bool es = false;
+            cout << "\n\n\tIngrese los dos nodos para conocer el camino a recorrer para encontrarse\n\nNODO UNO ---> ";cin >> nodo;
+            cout << "\nNODO DOS ---> "; cin >> valor;
+
+            esta = false;
+            for (auto var : final){
+                if (var.first == nodo) es = true;
+                if (var.first == valor) esta = true;
+            }
+            if (es == true && esta == true){
+                cout << "\n\n\tEl camino entre los nodos [ " << nodo << " ] y [ " << valor;
+                cout << " ] es = [ " << final[nodo][valor].back() << " ]\n\n";
+            }
+            else cout << "\n\n\tERROR ----- UNO DE LOS NODOS NO ESTA REGITRADO EN LA RED\n\n\n\n";
             break;
         }
 
